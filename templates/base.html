@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI-Based Real-Time UPI Fraud Detection System{% endblock %}</title>
+    <!-- Chart.js for data visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <!-- Enterprise Security Status Banner -->
+    <div class="inst-header">
+        <div class="dept-info">
+            <span class="badge-academic">ENTERPRISE SECURITY</span>
+            <strong>UPI Transaction Risk & Anomaly Defense System</strong>
+        </div>
+        <div class="team-info">
+            Engine Version: <strong>v2.4 Production</strong> &bull; Core: <strong>Hybrid BI-GBDT + SHAP XAI</strong>
+        </div>
+    </div>
+
+    <!-- Enterprise FinTech Navbar -->
+    <nav class="navbar-main">
+        <a href="{{ url_for('dashboard') }}" class="nav-brand">
+            <div class="nav-logo-icon">₹</div>
+            <div class="nav-brand-text">
+                <h1>UPI Sentinel AI</h1>
+                <p>Behavioral Anomaly & Explainable Risk Defense</p>
+            </div>
+        </a>
+
+        <ul class="nav-menu">
+            <li>
+                <a href="{{ url_for('dashboard') }}" class="nav-link {% if active_page == 'dashboard' %}active{% endif %}">
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('simulator') }}" class="nav-link {% if active_page == 'simulator' %}active{% endif %}">
+                    UPI Payment Simulator
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('transactions') }}" class="nav-link {% if active_page == 'transactions' %}active{% endif %}">
+                    Live Audit Ledger
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('models') }}" class="nav-link {% if active_page == 'models' %}active{% endif %}">
+                    Model Evaluation
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('batch') }}" class="nav-link {% if active_page == 'batch' %}active{% endif %}">
+                    Batch Audit
+                </a>
+            </li>
+        </ul>
+
+        <div class="nav-status">
+            <span class="pulse-dot"></span>
+            <span>Live Scoring Engine Active</span>
+        </div>
+    </nav>
+
+    <!-- Content Block -->
+    <main class="main-wrapper">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p><strong>AI-Based Real-Time UPI Fraud Detection Using Behavioral Anomaly Detection and Explainable Machine Learning</strong></p>
+        <p style="margin-top: 4px; font-size: 0.78rem;">
+            Real-Time Payment Security Operations Center &bull; Hybrid Behavioral Anomaly Detection & SHAP Explainable AI
+        </p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

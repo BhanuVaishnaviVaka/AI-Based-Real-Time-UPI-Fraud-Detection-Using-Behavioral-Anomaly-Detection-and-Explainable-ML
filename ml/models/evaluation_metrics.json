@@ -1,0 +1,142 @@
+{
+  "metrics": {
+    "Random Forest": {
+      "accuracy": 0.9997,
+      "precision": 0.9963,
+      "recall": 1.0,
+      "f1_score": 0.9982,
+      "roc_auc": 1.0,
+      "confusion_matrix": {
+        "tn": 2927,
+        "fp": 1,
+        "fn": 0,
+        "tp": 272
+      }
+    },
+    "XGBoost (BI-GBDT)": {
+      "accuracy": 0.9994,
+      "precision": 0.9927,
+      "recall": 1.0,
+      "f1_score": 0.9963,
+      "roc_auc": 1.0,
+      "confusion_matrix": {
+        "tn": 2926,
+        "fp": 2,
+        "fn": 0,
+        "tp": 272
+      }
+    },
+    "Isolation Forest": {
+      "accuracy": 0.9834,
+      "precision": 1.0,
+      "recall": 0.8051,
+      "f1_score": 0.8921,
+      "roc_auc": 0.9969,
+      "confusion_matrix": {
+        "tn": 2928,
+        "fp": 0,
+        "fn": 53,
+        "tp": 219
+      }
+    },
+    "Hybrid Proposed Framework": {
+      "accuracy": 0.9994,
+      "precision": 0.9927,
+      "recall": 1.0,
+      "f1_score": 0.9963,
+      "roc_auc": 1.0,
+      "confusion_matrix": {
+        "tn": 2926,
+        "fp": 2,
+        "fn": 0,
+        "tp": 272
+      }
+    }
+  },
+  "feature_importances": [
+    {
+      "feature": "amount_ratio",
+      "importance": 0.8202
+    },
+    {
+      "feature": "is_first_interaction",
+      "importance": 0.1163
+    },
+    {
+      "feature": "tx_count_1h",
+      "importance": 0.0239
+    },
+    {
+      "feature": "ip_risk_score",
+      "importance": 0.0174
+    },
+    {
+      "feature": "is_receiver_flagged",
+      "importance": 0.0094
+    },
+    {
+      "feature": "tx_count_24h",
+      "importance": 0.0071
+    },
+    {
+      "feature": "velocity_score",
+      "importance": 0.0039
+    },
+    {
+      "feature": "location_change_km",
+      "importance": 0.0014
+    },
+    {
+      "feature": "amount",
+      "importance": 0.0003
+    },
+    {
+      "feature": "hour",
+      "importance": 0.0
+    },
+    {
+      "feature": "day_of_week",
+      "importance": 0.0
+    },
+    {
+      "feature": "user_avg_amount",
+      "importance": 0.0
+    },
+    {
+      "feature": "amount_deviation",
+      "importance": 0.0
+    },
+    {
+      "feature": "is_new_device",
+      "importance": 0.0
+    },
+    {
+      "feature": "failed_pin_attempts",
+      "importance": 0.0
+    }
+  ],
+  "feature_columns": [
+    "amount",
+    "hour",
+    "day_of_week",
+    "user_avg_amount",
+    "amount_deviation",
+    "amount_ratio",
+    "tx_count_1h",
+    "tx_count_24h",
+    "velocity_score",
+    "is_new_device",
+    "location_change_km",
+    "ip_risk_score",
+    "is_first_interaction",
+    "is_receiver_flagged",
+    "failed_pin_attempts"
+  ],
+  "dataset_stats": {
+    "total_samples": 16000,
+    "fraud_samples": 1360,
+    "normal_samples": 14640,
+    "fraud_rate": 8.5,
+    "test_samples": 3200
+  }
+}

@@ -1,0 +1,260 @@
+{% extends "base.html" %}
+
+{% block title %}UPI Payment Simulator | AI Fraud Detection{% endblock %}
+
+{% block content %}
+<div class="page-title-bar">
+    <div class="page-title">
+        <h2>Interactive UPI Payment Simulator</h2>
+        <p>Test real-time transactions against the behavioral anomaly detection and explainable AI engine</p>
+    </div>
+</div>
+
+<!-- Preset Scenarios -->
+<div class="card" style="margin-bottom: 20px;">
+    <div class="card-header">
+        <span class="card-title">Quick Attack & Baseline Test Scenarios</span>
+        <span style="font-size: 0.78rem; color: var(--text-muted)">Click any preset for instant evaluation</span>
+    </div>
+    <div class="card-body" style="padding-bottom: 8px;">
+        <div class="preset-scenarios">
+            <button type="button" class="btn-preset" onclick="setPreset('canteen')">
+                <strong style="color: var(--safe-green)">✓ Normal Canteen Payment</strong>
+                <span>₹140 &bull; Usual time &bull; Trusted device</span>
+            </button>
+            <button type="button" class="btn-preset" onclick="setPreset('rent')">
+                <strong style="color: #0284c7">✦ Large Legitimate Purchase</strong>
+                <span>₹3,800 &bull; Verified merchant &bull; 0km hop</span>
+            </button>
+            <button type="button" class="btn-preset" onclick="setPreset('midnight_drain')">
+                <strong style="color: var(--fraud-red)">⚠ Midnight Account Drain</strong>
+                <span>₹32,000+ &bull; 03:00 AM &bull; Flagged receiver</span>
+            </button>
+            <button type="button" class="btn-preset" onclick="setPreset('velocity')">
+                <strong style="color: var(--suspicious-amber)">⚡ High Velocity Burst</strong>
+                <span>8 txns in 1hr &bull; Rapid pacing anomaly</span>
+            </button>
+            <button type="button" class="btn-preset" onclick="setPreset('sim_swap')">
+                <strong style="color: var(--fraud-red)">☠ SIM Swap & Geo Hop</strong>
+                <span>New device &bull; 950km jump &bull; Invalid PINs</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="simulator-layout">
+    <!-- Transaction Input Form -->
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">Transaction & Behavioral Parameters</span>
+        </div>
+        <div class="card-body">
+            <form id="paymentSimForm">
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label" for="user_id">Sender Account Profile</label>
+                        <select id="user_id" class="form-select">
+                            {% for u in users %}
+                            <option value="{{ u.user_id }}" data-avg="{{ u.avg_amt }}" data-upi="{{ u.upi_id }}" {% if loop.first %}selected{% endif %}>
+                                {{ u.name }} (Avg ₹{{ u.avg_amt }})
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="sender_upi">Sender UPI VPA</label>
+                        <input type="text" id="sender_upi" class="form-control" value="anil.k@okhdfcbank" readonly>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label" for="receiver_upi">Beneficiary / Receiver UPI VPA</label>
+                        <input type="text" id="receiver_upi" class="form-control" value="canteen.central@upi" list="receiversList">
+                        <datalist id="receiversList">
+                            {% for m in merchants %}
+                            <option value="{{ m }}"></option>
+                            {% endfor %}
+                            {% for s in suspicious_receivers %}
+                            <option value="{{ s }}"></option>
+                            {% endfor %}
+                        </datalist>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="amount">Transaction Amount (INR ₹)</label>
+                        <input type="number" id="amount" class="form-control" value="140" step="10" min="1">
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label" for="user_avg_amount">User 30-Day Historical Average (₹)</label>
+                        <input type="number" id="user_avg_amount" class="form-control" value="850" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="hour">Transaction Hour (0 to 23 hrs)</label>
+                        <input type="number" id="hour" class="form-control" value="13" min="0" max="23">
+                    </div>
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid var(--border-subtle); margin: 16px 0;">
+
+                <h4 style="font-size: 0.88rem; font-weight: 700; color: #334155; margin-bottom: 12px;">
+                    Behavioral Interaction & Environmental Signatures
+                </h4>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label" for="tx_count_1h">Transactions in Past 1 Hour</label>
+                        <input type="number" id="tx_count_1h" class="form-control" value="1" min="1" max="20">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="tx_count_24h">Transactions in Past 24 Hours</label>
+                        <input type="number" id="tx_count_24h" class="form-control" value="3" min="1" max="50">
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label" for="velocity_score">Velocity Index (0.0 to 1.0)</label>
+                        <input type="number" id="velocity_score" class="form-control" value="0.10" step="0.05" min="0" max="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="is_new_device">Device Signature</label>
+                        <select id="is_new_device" class="form-select">
+                            <option value="0">Trusted Registered Device</option>
+                            <option value="1">Unrecognized / New Device Hardware</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label" for="location_change_km">Location Displacement (km)</label>
+                        <input type="number" id="location_change_km" class="form-control" value="0" min="0" max="10000">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="ip_risk_score">Network / IP Risk Score (0.0 - 1.0)</label>
+                        <input type="number" id="ip_risk_score" class="form-control" value="0.08" step="0.05" min="0" max="1">
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label" for="is_receiver_flagged">Beneficiary Registry Status</label>
+                        <select id="is_receiver_flagged" class="form-select">
+                            <option value="0">Clean Beneficiary Record</option>
+                            <option value="1">Flagged / Mule Account in NPCI Registry</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="failed_pin_attempts">Consecutive Incorrect PIN Entries</label>
+                        <select id="failed_pin_attempts" class="form-select">
+                            <option value="0">0 (Correct on First Try)</option>
+                            <option value="1">1 Failed Attempt</option>
+                            <option value="2">2+ Failed Attempts</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitSimBtn" class="btn btn-primary" style="width: 100%; margin-top: 10px; justify-content: center; padding: 12px;">
+                    Authorize & Scan Transaction
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Live Result Inspection Card -->
+    <div>
+        <div id="simResultCard" class="result-card status-safe" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                    <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px;">
+                        Hybrid Assessment
+                    </span>
+                    <h3 style="font-size: 1.4rem; margin-top: 2px;">
+                        Risk Score: <span id="resScore" style="font-weight: 800;">12.4</span> / 100
+                    </h3>
+                </div>
+                <span id="resStatus" class="badge-status safe">
+                    <span class="dot-indicator"></span> Safe
+                </span>
+            </div>
+
+            <!-- Risk Meter -->
+            <div class="risk-meter-wrapper">
+                <div class="risk-meter-bar">
+                    <div id="resMeterFill" class="risk-meter-fill safe" style="width: 12%;"></div>
+                </div>
+                <div class="meter-scale">
+                    <span>0 (Safe)</span>
+                    <span>40 (Suspicious)</span>
+                    <span>75 (Fraudulent)</span>
+                    <span>100</span>
+                </div>
+            </div>
+
+            <div style="background-color: var(--bg-subtle); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 16px;">
+                <div style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase;">
+                    Automated Defense Action
+                </div>
+                <div id="resAction" style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-top: 2px;">
+                    Approved Automatically
+                </div>
+                <div id="resRecommendation" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">
+                    Low behavioral risk. Transaction authorized.
+                </div>
+            </div>
+
+            <!-- Multi-Model Consensus Breakdown -->
+            <h4 style="font-size: 0.82rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
+                Multi-Model Ensemble Consensus
+            </h4>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; text-align: center;">
+                <div style="background: white; border: 1px solid var(--border-subtle); padding: 8px; border-radius: var(--radius-sm);">
+                    <div style="font-size: 0.7rem; color: var(--text-muted);">XGBoost (BI-GBDT)</div>
+                    <div id="resXgb" style="font-size: 1.1rem; font-weight: 700; color: var(--brand-primary);">10.2%</div>
+                </div>
+                <div style="background: white; border: 1px solid var(--border-subtle); padding: 8px; border-radius: var(--radius-sm);">
+                    <div style="font-size: 0.7rem; color: var(--text-muted);">Random Forest</div>
+                    <div id="resRf" style="font-size: 1.1rem; font-weight: 700; color: var(--brand-primary);">8.5%</div>
+                </div>
+                <div style="background: white; border: 1px solid var(--border-subtle); padding: 8px; border-radius: var(--radius-sm);">
+                    <div style="font-size: 0.7rem; color: var(--text-muted);">Isolation Forest</div>
+                    <div id="resIso" style="font-size: 1.1rem; font-weight: 700; color: var(--brand-primary);">14.1%</div>
+                </div>
+            </div>
+
+            <!-- Explainable AI (XAI) Reasons -->
+            <h4 style="font-size: 0.82rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
+                SHAP Explainable AI: Key Contributing Factors
+            </h4>
+            <ul id="resReasonsList" class="xai-reasons-list">
+                <!-- Injected via JavaScript -->
+            </ul>
+
+            <h4 style="font-size: 0.82rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 14px; margin-bottom: 6px;">
+                Feature Attribution Breakdown
+            </h4>
+            <div id="resFactorsList" style="background: #fafafa; padding: 10px; border-radius: var(--radius-sm); border: 1px solid #f1f5f9;">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+
+        <div id="simPlaceholder" class="card" style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+            <div style="font-size: 2rem; margin-bottom: 10px;">🔍</div>
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main);">Inference Standby</h3>
+            <p style="font-size: 0.84rem; margin-top: 4px; max-width: 320px; margin-left: auto; margin-right: auto;">
+                Select a preset scenario or adjust the behavioral signatures and click <strong>Authorize & Scan Transaction</strong> to see real-time XAI explainability.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

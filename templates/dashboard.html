@@ -1,0 +1,112 @@
+﻿{% extends "base.html" %}
+
+{% block title %}SOC Security Dashboard | AI UPI Fraud Detection{% endblock %}
+
+{% block content %}
+<div class="page-title-bar">
+    <div class="page-title">
+        <h2>Live Security Operations Center (SOC)</h2>
+        <p>Real-time behavioral stream monitoring, automated risk triage, and fraud interception</p>
+    </div>
+    <div style="display: flex; gap: 10px;">
+        <button id="btnSimStream" class="btn btn-outline btn-sm">
+            ⚡ Generate Live Transaction
+        </button>
+        <a href="{{ url_for('simulator') }}" class="btn btn-primary btn-sm">
+            Launch Payment Simulator &rarr;
+        </a>
+    </div>
+</div>
+
+<!-- Stats Counter Grid -->
+<div class="stats-grid">
+    <div class="stat-card primary">
+        <div class="stat-label">Total Volume Monitored</div>
+        <div class="stat-value">₹{{ total_volume }}</div>
+        <div class="stat-meta">{{ total_txns }} total transactions scanned</div>
+    </div>
+    <div class="stat-card safe">
+        <div class="stat-label">Approved Transactions</div>
+        <div class="stat-value" style="color: var(--safe-green)">{{ safe_count }}</div>
+        <div class="stat-meta">Safe behavioral baseline ({{ ((safe_count / total_txns) * 100)|round(1) }}%)</div>
+    </div>
+    <div class="stat-card suspicious">
+        <div class="stat-label">Step-Up 2FA Challenged</div>
+        <div class="stat-value" style="color: var(--suspicious-amber)">{{ suspicious_count }}</div>
+        <div class="stat-meta">Biometric / OTP verification required</div>
+    </div>
+    <div class="stat-card fraud">
+        <div class="stat-label">Fraudulent Blocked</div>
+        <div class="stat-value" style="color: var(--fraud-red)">{{ fraud_count }}</div>
+        <div class="stat-meta">Prevented loss: ₹{{ blocked_volume }}</div>
+    </div>
+</div>
+
+<!-- Charts Section -->
+<div class="dashboard-grid">
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">Recent Hybrid Risk Score Trajectory</span>
+            <span style="font-size: 0.78rem; color: var(--text-muted)">Streaming Index</span>
+        </div>
+        <div class="card-body" style="height: 260px;">
+            <canvas id="trendLineChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">Risk Categorization</span>
+            <span style="font-size: 0.78rem; color: var(--text-muted)">Safe / Suspicious / Fraud</span>
+        </div>
+        <div class="card-body" style="height: 260px;">
+            <canvas id="riskDoughnutChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Live Transactions Feed -->
+<div class="card">
+    <div class="card-header">
+        <span class="card-title">Real-Time UPI Transaction Stream</span>
+        <a href="{{ url_for('transactions') }}" class="btn btn-outline btn-sm">View Full Ledger</a>
+    </div>
+    <div class="card-body" style="padding: 0;">
+        <div class="table-responsive">
+            <table class="fin-table">
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Time</th>
+                        <th>Sender VPA</th>
+                        <th>Beneficiary VPA</th>
+                        <th>Amount</th>
+                        <th>Risk Score</th>
+                        <th>Classification</th>
+                        <th>Automated Action</th>
+                    </tr>
+                </thead>
+                <tbody id="liveTxTableBody">
+                    {% for tx in recent_txns %}
+                    <tr>
+                        <td class="mono">{{ tx.transaction_id }}</td>
+                        <td>{{ tx.timestamp.split(' ')[1] if ' ' in tx.timestamp else tx.timestamp }}</td>
+                        <td><strong>{{ tx.sender_upi }}</strong></td>
+                        <td>{{ tx.receiver_upi }}</td>
+                        <td style="font-weight:700">₹{{ "{:,.2f}".format(tx.amount) }}</td>
+                        <td><strong>{{ tx.risk_score }}</strong> / 100</td>
+                        <td>
+                            <span class="badge-status {{ tx.badge_class }}">
+                                <span class="dot-indicator"></span>
+                                {{ tx.status }}
+                            </span>
+                        </td>
+                        <td><small style="color: var(--text-muted)">{{ tx.action }}</small></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

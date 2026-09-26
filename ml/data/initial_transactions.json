@@ -1,0 +1,1832 @@
+[
+  {
+    "transaction_id": "TXN2603008756",
+    "user_id": "usr_ananya",
+    "sender_upi": "ananya.v@ybl",
+    "receiver_upi": "dmart.retail@paytm",
+    "amount": 1725.07,
+    "timestamp": "2026-03-13 02:36:07",
+    "risk_score": 4.0,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 13.2
+    },
+    "features": {
+      "amount": 1725.07,
+      "hour": 18,
+      "day_of_week": 4,
+      "user_avg_amount": 950.0,
+      "amount_deviation": 775.07,
+      "amount_ratio": 1.816,
+      "tx_count_1h": 1,
+      "tx_count_24h": 5,
+      "velocity_score": 0.421,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.038,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603004660",
+    "user_id": "usr_karthik",
+    "sender_upi": "karthik.m@barodampay",
+    "receiver_upi": "metro.card@paytm",
+    "amount": 1607.37,
+    "timestamp": "2026-03-06 21:41:24",
+    "risk_score": 8.1,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 27.1
+    },
+    "features": {
+      "amount": 1607.37,
+      "hour": 13,
+      "day_of_week": 4,
+      "user_avg_amount": 3100.0,
+      "amount_deviation": 1492.63,
+      "amount_ratio": 0.519,
+      "tx_count_1h": 2,
+      "tx_count_24h": 10,
+      "velocity_score": 0.254,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.467,
+      "is_first_interaction": 1,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        },
+        {
+          "feature": "First-Time Interaction",
+          "weight": 8.0,
+          "direction": "risk",
+          "desc": "No prior sender-receiver history"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603006095",
+    "user_id": "usr_ananya",
+    "sender_upi": "ananya.v@ybl",
+    "receiver_upi": "arjun.reddy@axl",
+    "amount": 826.84,
+    "timestamp": "2026-03-13 22:16:58",
+    "risk_score": 11.9,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 39.5
+    },
+    "features": {
+      "amount": 826.84,
+      "hour": 14,
+      "day_of_week": 4,
+      "user_avg_amount": 950.0,
+      "amount_deviation": 123.16,
+      "amount_ratio": 0.87,
+      "tx_count_1h": 1,
+      "tx_count_24h": 8,
+      "velocity_score": 0.413,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.133,
+      "is_first_interaction": 1,
+      "is_receiver_flagged": 1,
+      "failed_pin_attempts": 1
+    },
+    "explanations": {
+      "key_reasons": [
+        "Receiver VPA address has prior fraud reports or mule account flags in NPCI registry."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        },
+        {
+          "feature": "Flagged Beneficiary VPA",
+          "weight": 25.0,
+          "direction": "risk",
+          "desc": "Known suspicious entity"
+        },
+        {
+          "feature": "First-Time Interaction",
+          "weight": 8.0,
+          "direction": "risk",
+          "desc": "No prior sender-receiver history"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603000304",
+    "user_id": "usr_sunita",
+    "sender_upi": "sunita.r@oksbi",
+    "receiver_upi": "arjun.reddy@axl",
+    "amount": 597.97,
+    "timestamp": "2026-03-09 02:09:08",
+    "risk_score": 3.5,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 11.5
+    },
+    "features": {
+      "amount": 597.97,
+      "hour": 18,
+      "day_of_week": 0,
+      "user_avg_amount": 650.0,
+      "amount_deviation": 52.03,
+      "amount_ratio": 0.92,
+      "tx_count_1h": 1,
+      "tx_count_24h": 2,
+      "velocity_score": 0.191,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.424,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603008241",
+    "user_id": "usr_rahul",
+    "sender_upi": "rahul.k@paytm",
+    "receiver_upi": "zepto@indus",
+    "amount": 388.49,
+    "timestamp": "2026-03-22 02:56:20",
+    "risk_score": 3.4,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 11.4
+    },
+    "features": {
+      "amount": 388.49,
+      "hour": 18,
+      "day_of_week": 6,
+      "user_avg_amount": 450.0,
+      "amount_deviation": 61.51,
+      "amount_ratio": 0.863,
+      "tx_count_1h": 1,
+      "tx_count_24h": 9,
+      "velocity_score": 0.326,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.372,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603009577",
+    "user_id": "usr_rahul",
+    "sender_upi": "rahul.k@paytm",
+    "receiver_upi": "vikram.s@icici",
+    "amount": 534.11,
+    "timestamp": "2026-03-16 18:34:49",
+    "risk_score": 4.7,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 15.6
+    },
+    "features": {
+      "amount": 534.11,
+      "hour": 10,
+      "day_of_week": 0,
+      "user_avg_amount": 450.0,
+      "amount_deviation": 84.11,
+      "amount_ratio": 1.187,
+      "tx_count_1h": 2,
+      "tx_count_24h": 4,
+      "velocity_score": 0.387,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.225,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603001035",
+    "user_id": "usr_anil",
+    "sender_upi": "anil.k@okhdfcbank",
+    "receiver_upi": "swiggy@icici",
+    "amount": 998.91,
+    "timestamp": "2026-03-15 16:27:27",
+    "risk_score": 3.6,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 12.0
+    },
+    "features": {
+      "amount": 998.91,
+      "hour": 8,
+      "day_of_week": 6,
+      "user_avg_amount": 850.0,
+      "amount_deviation": 148.91,
+      "amount_ratio": 1.175,
+      "tx_count_1h": 2,
+      "tx_count_24h": 9,
+      "velocity_score": 0.3,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.158,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603009976",
+    "user_id": "usr_rahul",
+    "sender_upi": "rahul.k@paytm",
+    "receiver_upi": "canteen.central@upi",
+    "amount": 208.11,
+    "timestamp": "2026-03-10 05:18:43",
+    "risk_score": 6.5,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 21.8
+    },
+    "features": {
+      "amount": 208.11,
+      "hour": 21,
+      "day_of_week": 1,
+      "user_avg_amount": 450.0,
+      "amount_deviation": 241.89,
+      "amount_ratio": 0.462,
+      "tx_count_1h": 1,
+      "tx_count_24h": 5,
+      "velocity_score": 0.122,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.125,
+      "is_first_interaction": 1,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        },
+        {
+          "feature": "First-Time Interaction",
+          "weight": 8.0,
+          "direction": "risk",
+          "desc": "No prior sender-receiver history"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603007872",
+    "user_id": "usr_vikram",
+    "sender_upi": "vikram.s@icici",
+    "receiver_upi": "blinkit@kotak",
+    "amount": 2262.28,
+    "timestamp": "2026-03-01 18:23:07",
+    "risk_score": 7.1,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 23.8
+    },
+    "features": {
+      "amount": 2262.28,
+      "hour": 10,
+      "day_of_week": 6,
+      "user_avg_amount": 1200.0,
+      "amount_deviation": 1062.28,
+      "amount_ratio": 1.885,
+      "tx_count_1h": 2,
+      "tx_count_24h": 1,
+      "velocity_score": 0.422,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.026,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603008341",
+    "user_id": "usr_anil",
+    "sender_upi": "anil.k@okhdfcbank",
+    "receiver_upi": "swiggy@icici",
+    "amount": 1242.34,
+    "timestamp": "2026-03-12 05:56:30",
+    "risk_score": 2.7,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 9.2
+    },
+    "features": {
+      "amount": 1242.34,
+      "hour": 21,
+      "day_of_week": 3,
+      "user_avg_amount": 850.0,
+      "amount_deviation": 392.34,
+      "amount_ratio": 1.462,
+      "tx_count_1h": 1,
+      "tx_count_24h": 4,
+      "velocity_score": 0.273,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.395,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603010914",
+    "user_id": "usr_priya",
+    "sender_upi": "priya.sharma@apl",
+    "receiver_upi": "rahul.k@paytm",
+    "amount": 2091.73,
+    "timestamp": "2026-03-14 22:32:28",
+    "risk_score": 10.6,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 35.4
+    },
+    "features": {
+      "amount": 2091.73,
+      "hour": 14,
+      "day_of_week": 5,
+      "user_avg_amount": 2200.0,
+      "amount_deviation": 108.27,
+      "amount_ratio": 0.951,
+      "tx_count_1h": 1,
+      "tx_count_24h": 2,
+      "velocity_score": 0.381,
+      "is_new_device": 0,
+      "location_change_km": 423.97,
+      "ip_risk_score": 0.059,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 1
+    },
+    "explanations": {
+      "key_reasons": [
+        "Geographical discrepancy: Transaction originated 424 km from habitual region."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        },
+        {
+          "feature": "Geographical Velocity Hop",
+          "weight": 16.0,
+          "direction": "risk",
+          "desc": "423.97 km displacement"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603005815",
+    "user_id": "usr_vikram",
+    "sender_upi": "vikram.s@icici",
+    "receiver_upi": "blinkit@kotak",
+    "amount": 825.41,
+    "timestamp": "2026-03-05 15:16:11",
+    "risk_score": 4.4,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 14.7
+    },
+    "features": {
+      "amount": 825.41,
+      "hour": 7,
+      "day_of_week": 3,
+      "user_avg_amount": 1200.0,
+      "amount_deviation": 374.59,
+      "amount_ratio": 0.688,
+      "tx_count_1h": 2,
+      "tx_count_24h": 2,
+      "velocity_score": 0.13,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.073,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603011298",
+    "user_id": "usr_arjun",
+    "sender_upi": "arjun.reddy@axl",
+    "receiver_upi": "amazon.pay@apl",
+    "amount": 1151.56,
+    "timestamp": "2026-03-16 18:32:46",
+    "risk_score": 3.9,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 13.1
+    },
+    "features": {
+      "amount": 1151.56,
+      "hour": 10,
+      "day_of_week": 0,
+      "user_avg_amount": 1500.0,
+      "amount_deviation": 348.44,
+      "amount_ratio": 0.768,
+      "tx_count_1h": 1,
+      "tx_count_24h": 6,
+      "velocity_score": 0.044,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.443,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603014444",
+    "user_id": "usr_ananya",
+    "sender_upi": "ananya.v@ybl",
+    "receiver_upi": "karthik.m@barodampay",
+    "amount": 1403.38,
+    "timestamp": "2026-03-08 14:09:00",
+    "risk_score": 6.1,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 20.4
+    },
+    "features": {
+      "amount": 1403.38,
+      "hour": 6,
+      "day_of_week": 6,
+      "user_avg_amount": 950.0,
+      "amount_deviation": 453.38,
+      "amount_ratio": 1.477,
+      "tx_count_1h": 1,
+      "tx_count_24h": 1,
+      "velocity_score": 0.269,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.244,
+      "is_first_interaction": 1,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        },
+        {
+          "feature": "First-Time Interaction",
+          "weight": 8.0,
+          "direction": "risk",
+          "desc": "No prior sender-receiver history"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603008670",
+    "user_id": "usr_vikram",
+    "sender_upi": "vikram.s@icici",
+    "receiver_upi": "tatacliq@okhdfcbank",
+    "amount": 2059.18,
+    "timestamp": "2026-03-03 04:31:58",
+    "risk_score": 6.8,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 22.8
+    },
+    "features": {
+      "amount": 2059.18,
+      "hour": 20,
+      "day_of_week": 1,
+      "user_avg_amount": 1200.0,
+      "amount_deviation": 859.18,
+      "amount_ratio": 1.716,
+      "tx_count_1h": 2,
+      "tx_count_24h": 2,
+      "velocity_score": 0.338,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.308,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 1
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603003128",
+    "user_id": "usr_arjun",
+    "sender_upi": "arjun.reddy@axl",
+    "receiver_upi": "vikram.s@icici",
+    "amount": 1826.09,
+    "timestamp": "2026-03-27 16:42:48",
+    "risk_score": 3.2,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 10.5
+    },
+    "features": {
+      "amount": 1826.09,
+      "hour": 8,
+      "day_of_week": 4,
+      "user_avg_amount": 1500.0,
+      "amount_deviation": 326.09,
+      "amount_ratio": 1.217,
+      "tx_count_1h": 2,
+      "tx_count_24h": 10,
+      "velocity_score": 0.3,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.396,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603005514",
+    "user_id": "usr_vikram",
+    "sender_upi": "vikram.s@icici",
+    "receiver_upi": "dmart.retail@paytm",
+    "amount": 717.11,
+    "timestamp": "2026-03-12 18:52:17",
+    "risk_score": 5.0,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 16.6
+    },
+    "features": {
+      "amount": 717.11,
+      "hour": 10,
+      "day_of_week": 3,
+      "user_avg_amount": 1200.0,
+      "amount_deviation": 482.89,
+      "amount_ratio": 0.598,
+      "tx_count_1h": 1,
+      "tx_count_24h": 8,
+      "velocity_score": 0.187,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.335,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 1
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603008498",
+    "user_id": "usr_karthik",
+    "sender_upi": "karthik.m@barodampay",
+    "receiver_upi": "arjun.reddy@axl",
+    "amount": 3146.09,
+    "timestamp": "2026-03-23 06:25:01",
+    "risk_score": 7.5,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 25.1
+    },
+    "features": {
+      "amount": 3146.09,
+      "hour": 22,
+      "day_of_week": 0,
+      "user_avg_amount": 3100.0,
+      "amount_deviation": 46.09,
+      "amount_ratio": 1.015,
+      "tx_count_1h": 1,
+      "tx_count_24h": 1,
+      "velocity_score": 0.429,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.309,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603011492",
+    "user_id": "usr_vikram",
+    "sender_upi": "vikram.s@icici",
+    "receiver_upi": "flipkart@axisbank",
+    "amount": 664.84,
+    "timestamp": "2026-03-26 03:28:17",
+    "risk_score": 2.2,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 7.2
+    },
+    "features": {
+      "amount": 664.84,
+      "hour": 19,
+      "day_of_week": 3,
+      "user_avg_amount": 1200.0,
+      "amount_deviation": 535.16,
+      "amount_ratio": 0.554,
+      "tx_count_1h": 1,
+      "tx_count_24h": 3,
+      "velocity_score": 0.11,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.259,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603005028",
+    "user_id": "usr_rahul",
+    "sender_upi": "rahul.k@paytm",
+    "receiver_upi": "tatacliq@okhdfcbank",
+    "amount": 319.87,
+    "timestamp": "2026-03-02 00:17:41",
+    "risk_score": 4.1,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 13.7
+    },
+    "features": {
+      "amount": 319.87,
+      "hour": 16,
+      "day_of_week": 0,
+      "user_avg_amount": 450.0,
+      "amount_deviation": 130.13,
+      "amount_ratio": 0.711,
+      "tx_count_1h": 1,
+      "tx_count_24h": 5,
+      "velocity_score": 0.271,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.438,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603006879",
+    "user_id": "usr_karthik",
+    "sender_upi": "karthik.m@barodampay",
+    "receiver_upi": "sunita.r@oksbi",
+    "amount": 3739.96,
+    "timestamp": "2026-03-22 14:50:20",
+    "risk_score": 11.5,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 38.5
+    },
+    "features": {
+      "amount": 3739.96,
+      "hour": 6,
+      "day_of_week": 6,
+      "user_avg_amount": 3100.0,
+      "amount_deviation": 639.96,
+      "amount_ratio": 1.206,
+      "tx_count_1h": 1,
+      "tx_count_24h": 9,
+      "velocity_score": 0.269,
+      "is_new_device": 1,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.447,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "Unrecognized device hardware signature / potential SIM swap takeover."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "New Device Hardware",
+          "weight": 22.0,
+          "direction": "risk",
+          "desc": "Untrusted device ID"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603009812",
+    "user_id": "usr_karthik",
+    "sender_upi": "karthik.m@barodampay",
+    "receiver_upi": "flipkart@axisbank",
+    "amount": 2866.53,
+    "timestamp": "2026-03-07 21:48:06",
+    "risk_score": 7.1,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 23.7
+    },
+    "features": {
+      "amount": 2866.53,
+      "hour": 13,
+      "day_of_week": 5,
+      "user_avg_amount": 3100.0,
+      "amount_deviation": 233.47,
+      "amount_ratio": 0.925,
+      "tx_count_1h": 1,
+      "tx_count_24h": 10,
+      "velocity_score": 0.121,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.42,
+      "is_first_interaction": 1,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        },
+        {
+          "feature": "First-Time Interaction",
+          "weight": 8.0,
+          "direction": "risk",
+          "desc": "No prior sender-receiver history"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603012036",
+    "user_id": "usr_ananya",
+    "sender_upi": "ananya.v@ybl",
+    "receiver_upi": "rahul.k@paytm",
+    "amount": 1238.33,
+    "timestamp": "2026-03-19 18:21:26",
+    "risk_score": 4.5,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 15.1
+    },
+    "features": {
+      "amount": 1238.33,
+      "hour": 10,
+      "day_of_week": 3,
+      "user_avg_amount": 950.0,
+      "amount_deviation": 288.33,
+      "amount_ratio": 1.304,
+      "tx_count_1h": 1,
+      "tx_count_24h": 3,
+      "velocity_score": 0.424,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.13,
+      "is_first_interaction": 1,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        },
+        {
+          "feature": "First-Time Interaction",
+          "weight": 8.0,
+          "direction": "risk",
+          "desc": "No prior sender-receiver history"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603011408",
+    "user_id": "usr_vikram",
+    "sender_upi": "vikram.s@icici",
+    "receiver_upi": "sunita.r@oksbi",
+    "amount": 542.28,
+    "timestamp": "2026-03-23 05:42:35",
+    "risk_score": 7.0,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 23.3
+    },
+    "features": {
+      "amount": 542.28,
+      "hour": 21,
+      "day_of_week": 0,
+      "user_avg_amount": 1200.0,
+      "amount_deviation": 657.72,
+      "amount_ratio": 0.452,
+      "tx_count_1h": 1,
+      "tx_count_24h": 8,
+      "velocity_score": 0.417,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.484,
+      "is_first_interaction": 1,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        },
+        {
+          "feature": "First-Time Interaction",
+          "weight": 8.0,
+          "direction": "risk",
+          "desc": "No prior sender-receiver history"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603003623",
+    "user_id": "usr_karthik",
+    "sender_upi": "karthik.m@barodampay",
+    "receiver_upi": "tatacliq@okhdfcbank",
+    "amount": 2483.33,
+    "timestamp": "2026-03-27 02:07:29",
+    "risk_score": 4.8,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 15.9
+    },
+    "features": {
+      "amount": 2483.33,
+      "hour": 18,
+      "day_of_week": 4,
+      "user_avg_amount": 3100.0,
+      "amount_deviation": 616.67,
+      "amount_ratio": 0.801,
+      "tx_count_1h": 1,
+      "tx_count_24h": 1,
+      "velocity_score": 0.351,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.164,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603008254",
+    "user_id": "usr_priya",
+    "sender_upi": "priya.sharma@apl",
+    "receiver_upi": "canteen.central@upi",
+    "amount": 1685.78,
+    "timestamp": "2026-03-10 00:11:38",
+    "risk_score": 3.5,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 11.7
+    },
+    "features": {
+      "amount": 1685.78,
+      "hour": 16,
+      "day_of_week": 1,
+      "user_avg_amount": 2200.0,
+      "amount_deviation": 514.22,
+      "amount_ratio": 0.766,
+      "tx_count_1h": 1,
+      "tx_count_24h": 9,
+      "velocity_score": 0.156,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.465,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603005156",
+    "user_id": "usr_rahul",
+    "sender_upi": "rahul.k@paytm",
+    "receiver_upi": "anil.k@okhdfcbank",
+    "amount": 285.29,
+    "timestamp": "2026-03-13 22:13:10",
+    "risk_score": 5.8,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 19.2
+    },
+    "features": {
+      "amount": 285.29,
+      "hour": 14,
+      "day_of_week": 4,
+      "user_avg_amount": 450.0,
+      "amount_deviation": 164.71,
+      "amount_ratio": 0.634,
+      "tx_count_1h": 1,
+      "tx_count_24h": 3,
+      "velocity_score": 0.145,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.34,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 1
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603007540",
+    "user_id": "usr_anil",
+    "sender_upi": "anil.k@okhdfcbank",
+    "receiver_upi": "canteen.central@upi",
+    "amount": 524.15,
+    "timestamp": "2026-03-08 05:29:34",
+    "risk_score": 10.0,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 33.3
+    },
+    "features": {
+      "amount": 524.15,
+      "hour": 21,
+      "day_of_week": 6,
+      "user_avg_amount": 850.0,
+      "amount_deviation": 325.85,
+      "amount_ratio": 0.617,
+      "tx_count_1h": 2,
+      "tx_count_24h": 10,
+      "velocity_score": 0.408,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.216,
+      "is_first_interaction": 1,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 1
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        },
+        {
+          "feature": "First-Time Interaction",
+          "weight": 8.0,
+          "direction": "risk",
+          "desc": "No prior sender-receiver history"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603007497",
+    "user_id": "usr_vikram",
+    "sender_upi": "vikram.s@icici",
+    "receiver_upi": "flipkart@axisbank",
+    "amount": 10.0,
+    "timestamp": "2026-03-29 05:12:14",
+    "risk_score": 9.1,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 30.4
+    },
+    "features": {
+      "amount": 10.0,
+      "hour": 21,
+      "day_of_week": 6,
+      "user_avg_amount": 1200.0,
+      "amount_deviation": 1190.0,
+      "amount_ratio": 0.008,
+      "tx_count_1h": 1,
+      "tx_count_24h": 10,
+      "velocity_score": 0.273,
+      "is_new_device": 0,
+      "location_change_km": 198.25,
+      "ip_risk_score": 0.322,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  },
+  {
+    "transaction_id": "TXN2603007387",
+    "user_id": "usr_anil",
+    "sender_upi": "anil.k@okhdfcbank",
+    "receiver_upi": "tatacliq@okhdfcbank",
+    "amount": 523.67,
+    "timestamp": "2026-03-17 22:44:45",
+    "risk_score": 4.6,
+    "status": "Safe",
+    "badge_class": "safe",
+    "action": "Approved automatically",
+    "models": {
+      "xgboost_prob": 0.0,
+      "random_forest_prob": 0.0,
+      "isolation_forest_anomaly": 15.2
+    },
+    "features": {
+      "amount": 523.67,
+      "hour": 14,
+      "day_of_week": 1,
+      "user_avg_amount": 850.0,
+      "amount_deviation": 326.33,
+      "amount_ratio": 0.616,
+      "tx_count_1h": 1,
+      "tx_count_24h": 7,
+      "velocity_score": 0.183,
+      "is_new_device": 0,
+      "location_change_km": 0.0,
+      "ip_risk_score": 0.021,
+      "is_first_interaction": 0,
+      "is_receiver_flagged": 0,
+      "failed_pin_attempts": 0
+    },
+    "explanations": {
+      "key_reasons": [
+        "All behavioral indicators, device fingerprints, and interaction histories conform to normal usage."
+      ],
+      "factors": [
+        {
+          "feature": "Amount Consistency",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Matches historical spending"
+        },
+        {
+          "feature": "Trusted Registered Device",
+          "weight": 15.0,
+          "direction": "safe",
+          "desc": "Matches known device"
+        },
+        {
+          "feature": "Normal Transaction Velocity",
+          "weight": 10.0,
+          "direction": "safe",
+          "desc": "Standard pacing"
+        }
+      ]
+    }
+  }
+]

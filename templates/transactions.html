@@ -1,0 +1,83 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Live Audit Ledger | AI UPI Fraud Detection{% endblock %}
+
+{% block content %}
+<div class="page-title-bar">
+    <div class="page-title">
+        <h2>Live Transaction Audit Ledger</h2>
+        <p>Comprehensive forensic audit trail of all evaluated UPI transactions</p>
+    </div>
+    <div style="display: flex; gap: 8px;">
+        <a href="{{ url_for('transactions', status='all') }}" class="btn {% if status_filter == 'all' %}btn-primary{% else %}btn-outline{% endif %} btn-sm">
+            All ({{ transactions|length }})
+        </a>
+        <a href="{{ url_for('transactions', status='safe') }}" class="btn {% if status_filter == 'safe' %}btn-primary{% else %}btn-outline{% endif %} btn-sm">
+            Safe
+        </a>
+        <a href="{{ url_for('transactions', status='suspicious') }}" class="btn {% if status_filter == 'suspicious' %}btn-primary{% else %}btn-outline{% endif %} btn-sm">
+            Suspicious
+        </a>
+        <a href="{{ url_for('transactions', status='fraudulent') }}" class="btn {% if status_filter == 'fraudulent' %}btn-primary{% else %}btn-outline{% endif %} btn-sm">
+            Fraudulent
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body" style="padding: 0;">
+        <div class="table-responsive">
+            <table class="fin-table">
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Timestamp</th>
+                        <th>Sender VPA</th>
+                        <th>Beneficiary VPA</th>
+                        <th>Amount (INR)</th>
+                        <th>Risk Score</th>
+                        <th>Status</th>
+                        <th>Decision / Action</th>
+                        <th>Multi-Model Consensus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tx in transactions %}
+                    <tr>
+                        <td class="mono">{{ tx.transaction_id }}</td>
+                        <td>{{ tx.timestamp }}</td>
+                        <td><strong>{{ tx.sender_upi }}</strong></td>
+                        <td>{{ tx.receiver_upi }}</td>
+                        <td style="font-weight:700">₹{{ "{:,.2f}".format(tx.amount) }}</td>
+                        <td><strong>{{ tx.risk_score }}</strong> / 100</td>
+                        <td>
+                            <span class="badge-status {{ tx.badge_class }}">
+                                <span class="dot-indicator"></span>
+                                {{ tx.status }}
+                            </span>
+                        </td>
+                        <td>
+                            <div style="font-size: 0.8rem; font-weight: 600;">{{ tx.action }}</div>
+                            <small style="color: var(--text-muted)">
+                                {% if tx.explanations.key_reasons %}
+                                {{ tx.explanations.key_reasons[0] }}
+                                {% else %}
+                                Baseline normal
+                                {% endif %}
+                            </small>
+                        </td>
+                        <td>
+                            <div style="font-size: 0.72rem; color: var(--text-muted);">
+                                XGB: <strong>{{ tx.models.xgboost_prob }}%</strong> | 
+                                RF: <strong>{{ tx.models.random_forest_prob }}%</strong> | 
+                                Iso: <strong>{{ tx.models.isolation_forest_anomaly }}%</strong>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

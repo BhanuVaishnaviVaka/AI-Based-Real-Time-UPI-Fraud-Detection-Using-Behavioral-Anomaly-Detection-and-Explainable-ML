@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Proposed Methodology{% endblock %}
+{% block content %}
+<h2>Proposed methodology</h2>
+<p>Academic simulation: no actual bank integration.</p>
+<img src="{{ url_for('static',filename='images/methodology_v3.svg') }}" alt="Offline training and online transaction flow" style="width:100%;max-width:1100px;background:white">
+<p>Safe: approve. Suspicious: hold and confirm. High risk: simulated verification. Critical risk: block with no override.</p>
+{% endblock %}

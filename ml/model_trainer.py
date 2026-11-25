@@ -46,8 +46,11 @@ def train_and_evaluate():
     X = df[FEATURE_COLS]
     y = df["is_fraud"]
     
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.20, random_state=42, stratify=y
+    X_train, X_holdout, y_train, y_holdout = train_test_split(
+        X, y, test_size=0.30, random_state=42, stratify=y
+    )
+    X_val, X_test, y_val, y_test = train_test_split(
+        X_holdout, y_holdout, test_size=0.50, random_state=42, stratify=y_holdout
     )
     
     print(f"Train size: {len(X_train)} | Test size: {len(X_test)}")
@@ -95,6 +98,18 @@ def train_and_evaluate():
     hybrid_scores = np.maximum(0.50*xgb_probs + 0.20*rf_probs + 0.30*iso_scores, 1-X_test["receiver_reputation_score"].to_numpy()/100)
     hybrid_preds = (hybrid_scores >= 0.40).astype(int)
     
+    # Measure the agreed fixed policy on validation before reporting test results.
+    val_iso = np.clip(0.5 - iso_forest.decision_function(X_val)*2.5,0,1)
+    val_score = np.maximum(.50*xgb_model.predict_proba(X_val)[:,1]+.20*rf_model.predict_proba(X_val)[:,1]+.30*val_iso,
+                           1-X_val["receiver_reputation_score"].to_numpy()/100)
+    def policy_report(labels, scores):
+        out = {}
+        for cut in (.40,.75,.90):
+            tn,fp,fn,tp = confusion_matrix(labels, scores>=cut, labels=[0,1]).ravel()
+            out[str(int(cut*100))] = {"recall":float(tp/max(1,tp+fn)), "fpr":float(fp/max(1,fp+tn)),
+                                      "alert_rate":float(np.mean(scores>=cut))}
+        return out
+
     # Compute Metrics Function
     def get_metrics(y_true, y_pred, y_prob):
         cm = confusion_matrix(y_true, y_pred)
@@ -146,7 +161,9 @@ def train_and_evaluate():
     joblib.dump(iso_forest, os.path.join(models_dir, "isolation_forest.joblib"))
     
     metrics_summary = {
-        "risk_policy_version": 2,
+        "risk_policy_version": 3,
+        "validation_policy": policy_report(y_val,val_score),
+        "test_policy": policy_report(y_test,hybrid_scores),
         "metrics": metrics,
         "feature_importances": feat_imp,
         "feature_columns": FEATURE_COLS,
@@ -155,6 +172,8 @@ def train_and_evaluate():
             "fraud_samples": int(sum(df["is_fraud"] == 1)),
             "normal_samples": int(sum(df["is_fraud"] == 0)),
             "fraud_rate": round(float(sum(df["is_fraud"] == 1) / len(df) * 100), 2),
+            "train_samples": len(y_train),
+            "validation_samples": len(y_val),
             "test_samples": len(y_test)
         }
     }

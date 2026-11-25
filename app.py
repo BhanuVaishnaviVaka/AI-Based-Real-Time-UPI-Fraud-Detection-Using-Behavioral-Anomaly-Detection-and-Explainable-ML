@@ -137,10 +137,16 @@ def transactions():
 
 @app.route("/models")
 def models():
-    fresh = engine.metadata.get("risk_policy_version") == 2
+    fresh = engine.metadata.get("risk_policy_version") == 3
     return render_template("models.html", metrics=engine.metadata.get("metrics",{}) if fresh else {},
         feature_importances=engine.metadata.get("feature_importances",[]),
-        dataset_stats=engine.metadata.get("dataset_stats",{}),active_page="models",legacy_metrics=not fresh)
+        dataset_stats=engine.metadata.get("dataset_stats",{}),active_page="models",legacy_metrics=not fresh,
+        validation_policy=engine.metadata.get("validation_policy",{}) if fresh else {},
+        test_policy=engine.metadata.get("test_policy",{}) if fresh else {})
+
+@app.route("/methodology")
+def methodology():
+    return render_template("methodology.html",active_page="methodology")
 
 @app.route("/batch")
 def batch():
@@ -156,6 +162,8 @@ def api_predict():
 @app.post("/api/transactions/<tid>/decision")
 def decide(tid):
     data = request.get_json(silent=True) or {}
+    if not isinstance(data, dict):
+        return jsonify(success=False,error="Invalid decision"),400
     with LOCK:
         expire_holds()
         item = PENDING.get(tid)

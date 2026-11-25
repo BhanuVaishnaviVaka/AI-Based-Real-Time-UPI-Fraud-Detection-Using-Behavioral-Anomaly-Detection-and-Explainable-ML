@@ -267,6 +267,25 @@ function displayResult(tx) {
         });
     }
 
+    const shapBox = document.getElementById("resShap");
+    if (shapBox) {
+        shapBox.replaceChildren();
+        const shap = tx.explanations.shap;
+        if (shap) {
+            const note = document.createElement("p");
+            note.textContent = "XGBoost TreeSHAP (signed log-odds), base: "+shap.base_value.toFixed(3);
+            shapBox.appendChild(note);
+            shap.contributions.slice(0,6).forEach(item => {
+                const line = document.createElement("p");
+                line.textContent = item.feature + ": " + (item.value >= 0 ? "+" : "") + item.value.toFixed(3);
+                shapBox.appendChild(line);
+            });
+            const policy = document.createElement("p");
+            policy.textContent = "Hybrid ML score: "+tx.explanations.policy.hybrid_ml_score+
+                " | Receiver risk floor: "+tx.explanations.policy.receiver_risk_floor;
+            shapBox.appendChild(policy);
+        }
+    }
     renderPaymentControls(tx);
     resultCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }

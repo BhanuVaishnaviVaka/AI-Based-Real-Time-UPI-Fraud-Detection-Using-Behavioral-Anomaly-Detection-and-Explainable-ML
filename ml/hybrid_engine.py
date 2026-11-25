@@ -12,6 +12,7 @@ import json
 import joblib
 import numpy as np
 import pandas as pd
+from xgboost import DMatrix
 from ml.reputation import receiver_reputation, combined_risk, risk_band
 
 MODELS_DIR = os.path.join(os.path.dirname(__file__), "models")
@@ -95,8 +96,21 @@ class UPIFraudEngine:
         recommendation = "Demo payment: " + action + "."
         explanations = self._generate_explanations(feat_dict, risk_score)
         explanations["key_reasons"].insert(0, f'Receiver reputation: {reputation["score"]}/100 ({reputation["category"]}).')
-        explanations["factors"].append({"feature": "Receiver reputation", "weight": round(100-reputation["score"], 1),
-            "direction": "risk" if reputation["score"] < 60 else "safe", "desc": "Independent demo profile signal (not SHAP)"})
+        # XGBoost's exact TreeSHAP: signed contributions to raw fraud log-odds.
+        booster = self.xgb_model.get_booster()
+        values = booster.predict(DMatrix(X_df), pred_contribs=True)[0]
+        explanations["shap"] = {
+            "model": "XGBoost",
+            "units": "raw log-odds (not percentage or total hybrid score)",
+            "base_value": float(values[-1]),
+            "contributions": sorted(
+                [{"feature": name, "value": float(value)} for name, value in zip(X_df.columns, values[:-1])],
+                key=lambda item: abs(item["value"]), reverse=True)
+        }
+        explanations["policy"] = {
+            "hybrid_ml_score": round(100*(.50*xgb_prob+.20*rf_prob+.30*iso_anomaly_score), 1),
+            "receiver_risk_floor": round(100-reputation["score"], 1)
+        }
 
         return {
             "risk_score": risk_score,

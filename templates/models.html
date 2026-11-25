@@ -3,6 +3,7 @@
 {% block title %}Model Evaluation & Empirical Benchmarks | AI UPI Fraud Detection{% endblock %}
 
 {% block content %}
+{% if legacy_metrics %}<p><strong>Updated policy metrics are not yet available. Run python ml/model_trainer.py to retrain and evaluate before reporting performance.</strong></p>{% endif %}
 <div class="page-title-bar">
     <div class="page-title">
         <h2>Empirical Machine Learning Evaluation</h2>

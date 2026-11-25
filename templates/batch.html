@@ -16,7 +16,7 @@
     </div>
     <div class="card-body">
         <p style="font-size: 0.88rem; color: #475569; margin-bottom: 16px;">
-            Execute high-throughput batch evaluation across 500 test transactions from the historical UPI dataset to test model latency, precision, and fraud interception rate.
+            Execute high-throughput batch evaluation across 500 test transactions from the synthetic dataset to measure scoring latency and risk distribution (not held-out accuracy).
         </p>
         <button id="btnRunBenchmark" class="btn btn-primary">
             🚀 Run 500-Transaction Batch Evaluation
@@ -42,8 +42,9 @@
             <div id="batchSuspicious" class="stat-value" style="color: var(--suspicious-amber)">12</div>
             <div class="stat-meta">2FA step-up triggered</div>
         </div>
+        <div class="stat-card suspicious"><div class="stat-label">High risk</div><div id="batchHigh" class="stat-value">0</div></div>
         <div class="stat-card fraud">
-            <div class="stat-label">Fraudulent Blocked</div>
+            <div class="stat-label">Critical risk (would block)</div>
             <div id="batchFraud" class="stat-value" style="color: var(--fraud-red)">30</div>
             <div class="stat-meta">High risk intercepted</div>
         </div>
@@ -101,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("batchSafe").innerText = data.safe;
                 document.getElementById("batchSuspicious").innerText = data.suspicious;
                 document.getElementById("batchFraud").innerText = data.fraud;
+                document.getElementById("batchHigh").innerText = data.high;
 
                 const tbody = document.getElementById("batchFlaggedTableBody");
                 tbody.innerHTML = "";

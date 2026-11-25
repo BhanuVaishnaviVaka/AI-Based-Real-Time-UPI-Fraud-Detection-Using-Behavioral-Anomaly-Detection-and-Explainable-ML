@@ -18,8 +18,9 @@
         <a href="{{ url_for('transactions', status='suspicious') }}" class="btn {% if status_filter == 'suspicious' %}btn-primary{% else %}btn-outline{% endif %} btn-sm">
             Suspicious
         </a>
-        <a href="{{ url_for('transactions', status='fraudulent') }}" class="btn {% if status_filter == 'fraudulent' %}btn-primary{% else %}btn-outline{% endif %} btn-sm">
-            Fraudulent
+        <a href="{{ url_for('transactions', status='high risk') }}" class="btn btn-outline btn-sm">High Risk</a>
+        <a href="{{ url_for('transactions', status='critical risk') }}" class="btn {% if status_filter == 'critical risk' %}btn-primary{% else %}btn-outline{% endif %} btn-sm">
+            Critical Risk
         </a>
     </div>
 </div>

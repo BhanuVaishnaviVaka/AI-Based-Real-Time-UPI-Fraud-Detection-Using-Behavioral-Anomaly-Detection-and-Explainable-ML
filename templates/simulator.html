@@ -150,7 +150,7 @@
                         <label class="form-label" for="is_receiver_flagged">Beneficiary Registry Status</label>
                         <select id="is_receiver_flagged" class="form-select">
                             <option value="0">Clean Beneficiary Record</option>
-                            <option value="1">Flagged / Mule Account in NPCI Registry</option>
+                            <option value="1">Flagged receiver (simulated)</option>
                         </select>
                     </div>
 
@@ -196,7 +196,7 @@
                 <div class="meter-scale">
                     <span>0 (Safe)</span>
                     <span>40 (Suspicious)</span>
-                    <span>75 (Fraudulent)</span>
+                    <span>75 (High Risk)</span><span>90 (Critical)</span>
                     <span>100</span>
                 </div>
             </div>
@@ -213,6 +213,18 @@
                 </div>
             </div>
 
+            <div class="card" style="padding:12px;margin-bottom:16px">
+                <strong>Receiver reputation: <span id="resReputation"></span></strong>
+                <p id="resBalances"></p><p id="resPaymentState"></p>
+                <div id="holdControls" hidden>
+                    <p id="holdCountdown"></p>
+                    <div id="demoVerification" hidden><label>Demo verification code: <strong id="demoCode"></strong>
+                    <input class="form-control" id="verificationCode" autocomplete="off" inputmode="numeric"></label></div>
+                    <button class="btn btn-primary" type="button" id="proceedPayment">Proceed</button>
+                    <button class="btn btn-outline" type="button" id="cancelPayment">Cancel</button>
+                </div>
+                <p>Fake balances only. No real UPI connection.</p>
+            </div>
             <!-- Multi-Model Consensus Breakdown -->
             <h4 style="font-size: 0.82rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
                 Multi-Model Ensemble Consensus
@@ -234,14 +246,14 @@
 
             <!-- Explainable AI (XAI) Reasons -->
             <h4 style="font-size: 0.82rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
-                SHAP Explainable AI: Key Contributing Factors
+                Explainable risk signals (rule-based)
             </h4>
             <ul id="resReasonsList" class="xai-reasons-list">
                 <!-- Injected via JavaScript -->
             </ul>
 
             <h4 style="font-size: 0.82rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 14px; margin-bottom: 6px;">
-                Feature Attribution Breakdown
+                Heuristic signal breakdown (not SHAP values)
             </h4>
             <div id="resFactorsList" style="background: #fafafa; padding: 10px; border-radius: var(--radius-sm); border: 1px solid #f1f5f9;">
                 <!-- Injected via JavaScript -->

@@ -12,6 +12,7 @@ import json
 import joblib
 import numpy as np
 import pandas as pd
+from ml.reputation import receiver_reputation, combined_risk, risk_band
 
 MODELS_DIR = os.path.join(os.path.dirname(__file__), "models")
 
@@ -71,7 +72,8 @@ class UPIFraudEngine:
             "failed_pin_attempts": failed_pin_attempts
         }
         
-        X_df = pd.DataFrame([feat_dict])[FEATURE_COLS]
+        feat_dict["receiver_reputation_score"] = receiver_reputation(tx.get("receiver_upi"))["score"]
+        X_df = pd.DataFrame([feat_dict])[self.metadata.get("feature_columns", FEATURE_COLS)]
         return feat_dict, X_df
 
     def score_transaction(self, tx):
@@ -87,33 +89,18 @@ class UPIFraudEngine:
         # We transform to 0.0 (very normal) to 1.0 (extreme anomaly)
         iso_anomaly_score = max(0.0, min(1.0, 0.5 - (iso_raw * 2.5)))
         
-        # 3. Hybrid Blended Risk Score (0 to 100)
-        # Weighting: 50% XGBoost + 20% Random Forest + 30% Isolation Forest
-        raw_hybrid = (0.50 * xgb_prob) + (0.20 * rf_prob) + (0.30 * iso_anomaly_score)
-        risk_score = round(max(0.0, min(100.0, raw_hybrid * 100)), 1)
-        
-        # 4. Categorization
-        if risk_score < 40.0:
-            status = "Safe"
-            badge_class = "safe"
-            action = "Approved automatically"
-            recommendation = "Low behavioral risk. Transaction authorized."
-        elif risk_score < 75.0:
-            status = "Suspicious"
-            badge_class = "suspicious"
-            action = "2-Factor Step-Up Verification Required"
-            recommendation = "Moderate deviation from user baseline. Trigger biometric or OTP re-authentication."
-        else:
-            status = "Fraudulent"
-            badge_class = "fraud"
-            action = "Blocked Immediately"
-            recommendation = "Severe anomaly indicators match known fraud typologies. Payment halted and flagged for bank review."
-
-        # 5. Explainable AI: Feature Contribution Analysis (SHAP-inspired)
+        reputation = receiver_reputation(tx.get("receiver_upi"))
+        risk_score = round(combined_risk(xgb_prob, rf_prob, iso_anomaly_score, reputation["score"]), 1)
+        status, badge_class, action = risk_band(risk_score)
+        recommendation = "Demo payment: " + action + "."
         explanations = self._generate_explanations(feat_dict, risk_score)
+        explanations["key_reasons"].insert(0, f'Receiver reputation: {reputation["score"]}/100 ({reputation["category"]}).')
+        explanations["factors"].append({"feature": "Receiver reputation", "weight": round(100-reputation["score"], 1),
+            "direction": "risk" if reputation["score"] < 60 else "safe", "desc": "Independent demo profile signal (not SHAP)"})
 
         return {
             "risk_score": risk_score,
+            "receiver_reputation": reputation,
             "status": status,
             "badge_class": badge_class,
             "action": action,
@@ -144,14 +131,15 @@ class UPIFraudEngine:
             if col not in df.columns:
                 df[col] = 0
                 
-        X = df[FEATURE_COLS]
+        df["receiver_reputation_score"] = df.get("receiver_upi", pd.Series("", index=df.index)).map(lambda v: receiver_reputation(v)["score"])
+        X = df[self.metadata.get("feature_columns", FEATURE_COLS)]
         rf_probs = self.rf_model.predict_proba(X)[:, 1]
         xgb_probs = self.xgb_model.predict_proba(X)[:, 1]
         iso_raw = self.iso_forest.decision_function(X)
         iso_anom = np.clip(0.5 - (iso_raw * 2.5), 0.0, 1.0)
         
         hybrid = (0.50 * xgb_probs) + (0.20 * rf_probs) + (0.30 * iso_anom)
-        scores = np.round(np.clip(hybrid * 100, 0.0, 100.0), 1)
+        scores = np.round(np.clip(np.maximum(hybrid * 100, 100-df["receiver_reputation_score"].to_numpy()), 0.0, 100.0), 1)
         
         return scores, xgb_probs, rf_probs, iso_anom
 
@@ -188,7 +176,7 @@ class UPIFraudEngine:
 
         # Recipient Flag
         if f["is_receiver_flagged"] == 1:
-            reasons.append("Receiver VPA address has prior fraud reports or mule account flags in NPCI registry.")
+            reasons.append("Receiver VPA address has prior fraud reports or mule account flags in the synthetic demo registry.")
             factors.append({"feature": "Flagged Beneficiary VPA", "weight": 25.0, "direction": "risk", "desc": "Known suspicious entity"})
 
         # First Interaction
@@ -212,7 +200,7 @@ class UPIFraudEngine:
 
         # IP Risk
         if f["ip_risk_score"] >= 0.55:
-            reasons.append("Network risk: Connection originated through anonymous proxy/VPN node.")
+            reasons.append("Network risk: Elevated simulated network risk.")
             factors.append({"feature": "High-Risk Network / IP", "weight": 14.0, "direction": "risk", "desc": f"IP risk {f['ip_risk_score']}"})
 
         if not reasons and score < 40.0:

@@ -10,6 +10,9 @@ Evaluates performance metrics and serializes models to disk.
 """
 
 import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from ml.reputation import receiver_reputation
 import json
 import joblib
 import numpy as np
@@ -20,7 +23,7 @@ from sklearn.ensemble import RandomForestClassifier, IsolationForest
 from xgboost import XGBClassifier
 from sklearn.metrics import (
     accuracy_score, precision_score, recall_score, f1_score,
-    roc_auc_score, confusion_matrix, classification_report
+    roc_auc_score, average_precision_score, confusion_matrix, classification_report
 )
 
 FEATURE_COLS = [
@@ -28,7 +31,7 @@ FEATURE_COLS = [
     "amount_deviation", "amount_ratio", "tx_count_1h", "tx_count_24h",
     "velocity_score", "is_new_device", "location_change_km",
     "ip_risk_score", "is_first_interaction", "is_receiver_flagged",
-    "failed_pin_attempts"
+    "failed_pin_attempts", "receiver_reputation_score"
 ]
 
 def train_and_evaluate():
@@ -39,6 +42,7 @@ def train_and_evaluate():
     print(f"Loading dataset from: {data_path}")
     df = pd.read_csv(data_path)
     
+    df["receiver_reputation_score"] = df["receiver_upi"].map(lambda v: receiver_reputation(v)["score"])
     X = df[FEATURE_COLS]
     y = df["is_fraud"]
     
@@ -79,22 +83,23 @@ def train_and_evaluate():
     iso_forest = IsolationForest(
         n_estimators=100, contamination=0.085, random_state=42
     )
-    iso_forest.fit(X_train)
+    iso_forest.fit(X_train[y_train == 0])
     # Decision function: lower values mean more anomalous
     iso_scores_raw = iso_forest.decision_function(X_test)
-    # Normalize to 0 (normal) to 1 (highly anomalous)
-    iso_scores = 1.0 - (iso_scores_raw - iso_scores_raw.min()) / (iso_scores_raw.max() - iso_scores_raw.min() + 1e-6)
+    # Fixed transform matches inference; no test-set normalization.
+    iso_scores = np.clip(0.5 - iso_scores_raw * 2.5, 0.0, 1.0)
     iso_preds = (iso_scores >= 0.60).astype(int)
     
     # 5. Hybrid Model (Supervised XGBoost + Isolation Forest Anomaly Score)
-    # Weight: 0.65 Supervised + 0.35 Behavioral Anomaly
-    hybrid_scores = (0.65 * xgb_probs) + (0.35 * iso_scores)
-    hybrid_preds = (hybrid_scores >= 0.50).astype(int)
+    # Match the deployed three-model fusion and reputation risk floor.
+    hybrid_scores = np.maximum(0.50*xgb_probs + 0.20*rf_probs + 0.30*iso_scores, 1-X_test["receiver_reputation_score"].to_numpy()/100)
+    hybrid_preds = (hybrid_scores >= 0.40).astype(int)
     
     # Compute Metrics Function
     def get_metrics(y_true, y_pred, y_prob):
         cm = confusion_matrix(y_true, y_pred)
         return {
+            "pr_auc": round(float(average_precision_score(y_true, y_prob)), 4),
             "accuracy": round(float(accuracy_score(y_true, y_pred)), 4),
             "precision": round(float(precision_score(y_true, y_pred, zero_division=0)), 4),
             "recall": round(float(recall_score(y_true, y_pred)), 4),
@@ -141,6 +146,7 @@ def train_and_evaluate():
     joblib.dump(iso_forest, os.path.join(models_dir, "isolation_forest.joblib"))
     
     metrics_summary = {
+        "risk_policy_version": 2,
         "metrics": metrics,
         "feature_importances": feat_imp,
         "feature_columns": FEATURE_COLS,

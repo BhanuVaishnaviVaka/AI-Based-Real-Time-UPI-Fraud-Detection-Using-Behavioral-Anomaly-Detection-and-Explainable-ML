@@ -1,48 +1,30 @@
-# AI-Based Real-Time UPI Fraud Detection Using Behavioral Anomaly Detection and Explainable Machine Learning
+# AI-Based Real-Time UPI Fraud Detection and Prevention
 
-### Enterprise Security Platform | Real-Time Payment Risk Defense
+Academic prototype using synthetic profiles, transactions and fake balances only. No bank/NPCI connection, real payments, or real identity authentication.
 
----
+## Updated methodology
+- Offline: synthetic data, preprocessing, behavioral features, receiver reputation, class weighting, Random Forest + XGBoost + Isolation Forest, fusion and evaluation.
+- Online: transaction validation, real-time features, reputation and hybrid scoring, explainable risk signals, policy routing, verification, audit and dashboard.
+- Receiver reputation is a 0–100 trust score based on six weighted synthetic historical signals: fraud-free record (30%), legitimate history (25%), age (15%), behavior (15%), device/location consistency (10%), activity consistency (5%). Unknown receivers receive a neutral 50, not a fraud label.
+- Existing saved models remain compatible. Reputation is an independent risk floor (max of hybrid score and 100 minus reputation); retraining also includes it as a model feature. Thresholds and weights are provisional, not calibrated probabilities.
+- Safe <40: approve. Suspicious 40–<75: hold, confirm/cancel. High Risk 75–<90: hold, simulated code verification and confirmation. Critical Risk >=90: block; no user override, flag for review. All holds expire at 60 seconds, enforced server-side, and balances are rechecked before release.
+- Actual XGBoost TreeSHAP contributions are shown in raw log-odds alongside separate rule-based warnings and the reputation policy floor. Independent data validation remains future work.
+- Demo verification code is deliberately displayed, not real OTP or authentication. In-memory balances and ledger reset on restart. No production security review interface or automatic retraining is implemented.
 
-## 📌 Project Overview
-The rapid growth of the Unified Payments Interface (UPI) has made digital payments ubiquitous across India. However, it has also led to evolving, sophisticated fraud typologies including SIM swap device takeovers, midnight account draining, mule accounts, and velocity bot attacks.
-
-This project implements a **Hybrid AI Defense Architecture** combining:
-1. **Supervised Classification:** XGBoost (inspired by the BI-GBDT framework) and Random Forest to detect known fraud patterns.
-2. **Unsupervised Anomaly Detection:** Isolation Forest to detect novel zero-day behavioral deviations.
-3. **Hybrid Risk Scoring:** A blended risk score $(0 - 100)$ triaging transactions into **Safe (< 40)**, **Suspicious (40 - 74)**, or **Fraudulent (≥ 75)**.
-4. **Explainable AI (XAI):** SHAP-inspired feature attribution detailing the exact reasons behind each risk score.
-5. **Executive FinTech Web Platform:** A professional banking SOC portal featuring a live transaction simulator, real-time analytics, empirical evaluation benchmarks, and methodology showcase.
-
----
-
-## 🚀 How to Run
-
-### 1. Install Dependencies
+## Run locally
 ```bash
 pip install -r requirements.txt
-```
-*(Packages: Flask, scikit-learn, xgboost, pandas, numpy, joblib)*
-
-### 2. (Optional) Re-generate Dataset and Re-train Models
-```bash
-python ml/dataset_generator.py
-python ml/model_trainer.py
-```
-
-### 3. Launch the Web Application
-```bash
 python app.py
 ```
-Open your web browser and navigate to:
-👉 **`http://127.0.0.1:5000`**
+Visit http://127.0.0.1:5000.
 
----
+To retrain with the added reputation feature and obtain updated metrics:
+```bash
+python ml/model_trainer.py
+python app.py
+```
+The synthetic receiver list is strongly correlated with the generated labels, so metrics may overstate real-world performance. Evaluate on independent profiles and real authorized data before claiming real-world detection. Existing saved model metrics are hidden until retraining. Batch scoring measures throughput, not independent accuracy.
 
-## 🌐 Web Application Modules
-- **Security Operations Center (SOC) Dashboard (`/`):** Real-time monitoring metrics, volume analyzed, risk distribution doughnut chart, temporal risk trajectory, and live streaming transaction feed.
-- **UPI Payment Simulator (`/simulator`):** Interactive UPI transaction checkout with instant attack presets (*Normal Canteen*, *High-Value Appliance*, *Midnight Drain*, *Velocity Attack*, *SIM Swap*), interactive sliders, risk meter, and SHAP explainability breakdown.
-- **Live Audit Ledger (`/transactions`):** Forensic ledger with filtering by Safe, Suspicious, or Fraudulent.
-- **Model Evaluation (`/models`):** Empirical performance comparison table (Accuracy, Precision, Recall, F1, ROC-AUC), confusion matrices (TP, FP, FN, TN), and BI-GBDT feature importance rankings.
-- **Project Methodology (`/methodology`):** High-resolution architecture diagram (`Proposed Methodology.png`), abstract, base paper citation (BI-GBDT, MDPI 2026), and literature review.
-- **Batch Audit (`/batch`):** High-throughput batch evaluation across 500 transactions testing latency and throughput.
+Run policy tests: `python -m unittest discover -s tests`.
+
+The methodology diagram is available at `/methodology`. Training uses a stratified 70/15/15 split; fixed thresholds are evaluated on validation and test separately. GitHub Actions runs retraining and automated tests and uploads the resulting models and metrics as an artifact when successful.

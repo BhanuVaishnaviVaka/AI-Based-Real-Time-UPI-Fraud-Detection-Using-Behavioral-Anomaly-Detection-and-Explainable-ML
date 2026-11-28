@@ -1,0 +1,112 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 3033 >>
+stream
+BT /F2 18 Tf 52 785.0 Td (AI-Based Real-Time UPI Fraud Detection and) Tj ET
+BT /F2 18 Tf 52 759.4 Td (Prevention) Tj ET
+BT /F2 13 Tf 52 719.9 Td (COMPLETE PROJECT METHODOLOGY) Tj ET
+BT /F1 10 Tf 52 695.4 Td (Group G-13 | Guide: Mrs. N. Meghana) Tj ET
+BT /F1 10 Tf 52 672.2 Td (245623733418 - V. Bhanu Vaishnavi) Tj ET
+BT /F1 10 Tf 52 649.0 Td (245623733407 - S. Harshitha) Tj ET
+BT /F1 10 Tf 52 625.8 Td (245623733409 - N. Shravani) Tj ET
+BT /F2 13 Tf 52 602.6 Td (1. Problem statement) Tj ET
+BT /F1 11.5 Tf 52 578.2 Td (UPI payments are fast; suspicious payments should be identified before simulated funds move.) Tj ET
+BT /F1 11.5 Tf 52 561.8 Td (Static rules can miss unusual user or receiver behavior, and rare fraud labels make accuracy) Tj ET
+BT /F1 11.5 Tf 52 545.5 Td (alone misleading.) Tj ET
+BT /F2 13 Tf 52 520.2 Td (2. Data and preprocessing) Tj ET
+BT /F1 11.5 Tf 52 495.7 Td (Use the synthetic UPI CSV and historical demo receiver profiles. Prepare numeric behavioral) Tj ET
+BT /F1 11.5 Tf 52 479.4 Td (features; preserve label separation. Use a stratified 70/15/15 train, validation and test) Tj ET
+BT /F1 11.5 Tf 52 463.0 Td (split. The existing tree-based pipeline expects numeric inputs; generic missing-value handling) Tj ET
+BT /F1 11.5 Tf 52 446.7 Td (and encoding are design requirements for future external datasets.) Tj ET
+BT /F2 13 Tf 52 421.4 Td (3. Behavioral features) Tj ET
+BT /F1 11.5 Tf 52 396.9 Td (Transaction amount and ratio, time, transaction frequency and velocity, new device, location) Tj ET
+BT /F1 11.5 Tf 52 380.6 Td (displacement, IP risk, first interaction, prior receiver flag and failed PIN attempts. The) Tj ET
+BT /F1 11.5 Tf 52 364.3 Td (current implementation uses first-interaction and receiver signals; GMM cluster interaction) Tj ET
+BT /F1 11.5 Tf 52 347.9 Td (prevalence from the base-paper concept is not implemented.) Tj ET
+BT /F2 13 Tf 52 322.6 Td (4. Receiver Reputation Score \(RRS\)) Tj ET
+BT /F1 11.5 Tf 52 298.1 Td (Trust ranges from 0 to 100. Weighted favorable signals: fraud-free record 30%, legitimate) Tj ET
+BT /F1 11.5 Tf 52 281.8 Td (history 25%, account age 15%, normal behavior 15%, device/location consistency 10%, activity) Tj ET
+BT /F1 11.5 Tf 52 265.5 Td (consistency 5%. Unknown receiver: neutral score 50. Demo profiles are preassigned; no live) Tj ET
+BT /F1 11.5 Tf 52 249.2 Td (registry access.) Tj ET
+BT /F2 13 Tf 52 223.8 Td (5. Hybrid machine learning) Tj ET
+BT /F1 11.5 Tf 52 199.4 Td (Random Forest and XGBoost use class weights; Isolation Forest is fitted to normal training) Tj ET
+BT /F1 11.5 Tf 52 183.0 Td (examples. The proposed model blends 50% XGBoost, 20% Random Forest and 30% normalized) Tj ET
+BT /F1 11.5 Tf 52 166.7 Td (Isolation Forest. Final risk is the maximum of the blended ML score and 100 minus RRS. The) Tj ET
+BT /F1 11.5 Tf 52 150.4 Td (weights and cutoffs are provisional, not calibrated fraud probabilities.) Tj ET
+BT /F2 13 Tf 52 125.1 Td (6. Risk decision and verification) Tj ET
+BT /F1 9 Tf 52 30 Td (Group G-13 | Page 1) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 3437 >>
+stream
+BT /F1 11.5 Tf 52 785.0 Td (Safe: below 40, approve. Suspicious: 40 to below 75, hold and request confirmation. High Risk:) Tj ET
+BT /F1 11.5 Tf 52 768.7 Td (75 to below 90, hold and require a simulated verification code and confirmation. Critical) Tj ET
+BT /F1 11.5 Tf 52 752.3 Td (Risk: 90 or above, block with no user override and flag for review. Holds expire after 60) Tj ET
+BT /F1 11.5 Tf 52 736.0 Td (seconds; funds remain unchanged unless released. Balances are checked again at release.) Tj ET
+BT /F2 13 Tf 52 710.7 Td (7. Explainability) Tj ET
+BT /F1 11.5 Tf 52 686.2 Td (XGBoost TreeSHAP gives signed contributions to raw log-odds, not the complete hybrid score.) Tj ET
+BT /F1 11.5 Tf 52 669.9 Td (Plain-language behavioral warnings and the receiver risk floor are shown separately.) Tj ET
+BT /F2 13 Tf 52 644.6 Td (8. Application architecture) Tj ET
+BT /F1 11.5 Tf 52 620.1 Td (Flask backend and REST endpoints; HTML, CSS, JavaScript and Chart.js frontend. Pages:) Tj ET
+BT /F1 11.5 Tf 52 603.8 Td (dashboard, simulator, audit ledger, model evaluation, methodology and batch benchmark. The) Tj ET
+BT /F1 11.5 Tf 52 587.4 Td (ledger and fake balances are stored in memory. The demo code is displayed for illustration,) Tj ET
+BT /F1 11.5 Tf 52 571.1 Td (not actual OTP authentication.) Tj ET
+BT /F2 13 Tf 52 545.8 Td (9. Evaluation) Tj ET
+BT /F1 11.5 Tf 52 521.3 Td (Report precision, recall, F1, ROC-AUC, average precision \(PR-AUC summary\), confusion matrix,) Tj ET
+BT /F1 11.5 Tf 52 505.0 Td (false-positive rate and alert rate. Evaluate fixed thresholds separately on validation and) Tj ET
+BT /F1 11.5 Tf 52 488.7 Td (held-out test data. Batch benchmark measures scoring throughput for 500 synthetic records; it) Tj ET
+BT /F1 11.5 Tf 52 472.3 Td (is not an independent accuracy test. Retraining and runtime test results must be confirmed) Tj ET
+BT /F1 11.5 Tf 52 456.0 Td (before making performance claims.) Tj ET
+BT /F2 13 Tf 52 430.7 Td (10. Testing and limitations) Tj ET
+BT /F1 11.5 Tf 52 406.2 Td (Test all threshold boundaries, safe debit/credit, held balance invariance, wrong verification,) Tj ET
+BT /F1 11.5 Tf 52 389.9 Td (valid confirmation, cancellation, timeout, repeat release and critical-block bypass. Synthetic) Tj ET
+BT /F1 11.5 Tf 52 373.5 Td (data, predefined receiver profiles, in-memory storage and simulated identity verification) Tj ET
+BT /F1 11.5 Tf 52 357.2 Td (limit generalization. No real UPI network or automatic retraining/security review service is) Tj ET
+BT /F1 11.5 Tf 52 340.9 Td (implemented.) Tj ET
+BT /F2 13 Tf 52 315.6 Td (References) Tj ET
+BT /F1 10 Tf 52 291.1 Td (Keles, M. B.; Gokturk, M. \(2026\). BI-GBDT: A Graph-Free Behavioral Interaction-Aware Gradient) Tj ET
+BT /F1 10 Tf 52 276.9 Td (Boosting Framework for Fraud Detection in Large-Scale Payment Systems. Applied Sciences, 16,) Tj ET
+BT /F1 10 Tf 52 262.7 Td (876.) Tj ET
+BT /F1 10 Tf 52 239.5 Td (Liu, F. T.; Ting, K. M.; Zhou, Z.-H. \(2008\). Isolation Forest. IEEE ICDM.) Tj ET
+BT /F1 10 Tf 52 216.3 Td (Chen, T.; Guestrin, C. \(2016\). XGBoost: A Scalable Tree Boosting System. KDD, pp. 785-794.) Tj ET
+BT /F1 10 Tf 52 193.1 Td (Breiman, L. \(2001\). Random Forests. Machine Learning, 45, 5-32.) Tj ET
+BT /F1 10 Tf 52 169.9 Td (Lundberg, S. M.; Lee, S.-I. \(2017\). A Unified Approach to Interpreting Model Predictions.) Tj ET
+BT /F1 10 Tf 52 155.7 Td (NeurIPS.) Tj ET
+BT /F1 9 Tf 52 30 Td (Group G-13 | Page 2) Tj ET
+endstream
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000121 00000 n 
+0000000191 00000 n 
+0000000266 00000 n 
+0000000402 00000 n 
+0000003487 00000 n 
+0000003623 00000 n 
+trailer
+<< /Size 9 /Root 1 0 R >>
+startxref
+7112
+%%EOF

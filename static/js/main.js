@@ -24,7 +24,7 @@ function initCharts() {
                         labels: data.distribution.labels,
                         datasets: [{
                             data: data.distribution.counts,
-                            backgroundColor: ["#059669", "#d97706", "#dc2626"],
+                            backgroundColor: ["#059669", "#d97706", "#ea580c", "#dc2626"],
                             borderWidth: 2,
                             borderColor: "#ffffff"
                         }]
@@ -53,7 +53,7 @@ function initCharts() {
                                 backgroundColor: "rgba(29, 78, 216, 0.08)",
                                 fill: true,
                                 tension: 0.3,
-                                pointBackgroundColor: data.recent_trend.scores.map(s => s >= 75 ? "#dc2626" : (s >= 40 ? "#d97706" : "#059669")),
+                                pointBackgroundColor: data.recent_trend.scores.map(s => s >= 90 ? "#dc2626" : (s >= 75 ? "#ea580c" : (s >= 40 ? "#d97706" : "#059669"))),
                                 pointRadius: 4
                             }]
                         },
@@ -196,10 +196,12 @@ function runSimulation() {
     .then(r => r.json())
     .then(data => {
         if (submitBtn) submitBtn.innerText = "Authorize & Scan Transaction";
+        if (!data.success) throw new Error(data.error || "Transaction failed");
         displayResult(data.transaction);
     })
     .catch(err => {
         if (submitBtn) submitBtn.innerText = "Authorize & Scan Transaction";
+        alert(err.message);
         console.error("Simulation error:", err);
     });
 }
@@ -258,13 +260,33 @@ function displayResult(tx) {
             div.innerHTML = `
                 <span>${f.feature} <small style="color:#64748b">(${f.desc})</small></span>
                 <span style="font-weight:600; color:${f.direction === 'risk' ? '#dc2626' : '#059669'}">
-                    ${f.direction === 'risk' ? '+' : '-'}${f.weight}%
+                    ${f.direction === 'risk' ? '+' : '-'}${f.weight}
                 </span>
             `;
             factorsContainer.appendChild(div);
         });
     }
 
+    const shapBox = document.getElementById("resShap");
+    if (shapBox) {
+        shapBox.replaceChildren();
+        const shap = tx.explanations.shap;
+        if (shap) {
+            const note = document.createElement("p");
+            note.textContent = "XGBoost TreeSHAP (signed log-odds), base: "+shap.base_value.toFixed(3);
+            shapBox.appendChild(note);
+            shap.contributions.slice(0,6).forEach(item => {
+                const line = document.createElement("p");
+                line.textContent = item.feature + ": " + (item.value >= 0 ? "+" : "") + item.value.toFixed(3);
+                shapBox.appendChild(line);
+            });
+            const policy = document.createElement("p");
+            policy.textContent = "Hybrid ML score: "+tx.explanations.policy.hybrid_ml_score+
+                " | Receiver risk floor: "+tx.explanations.policy.receiver_risk_floor;
+            shapBox.appendChild(policy);
+        }
+    }
+    renderPaymentControls(tx);
     resultCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
@@ -308,4 +330,40 @@ function initStreamSimulator() {
                 console.error("Stream error:", err);
             });
     });
+}
+
+let holdTimer;
+function renderPaymentControls(tx) {
+    clearInterval(holdTimer);
+    const controls=document.getElementById("holdControls");
+    document.getElementById("resReputation").textContent=tx.receiver_reputation.score+"/100 — "+tx.receiver_reputation.category;
+    document.getElementById("resBalances").textContent="Demo balances: sender ₹"+tx.sender_balance+" | receiver ₹"+tx.receiver_balance;
+    document.getElementById("resPaymentState").textContent=tx.state+" — "+(tx.money_transferred?"Simulated money transferred":"No money transferred");
+    controls.hidden=tx.state!=="Held";
+    if(controls.hidden) return;
+    const verify=document.getElementById("demoVerification");
+    verify.hidden=tx.status!=="High Risk";
+    document.getElementById("demoCode").textContent=tx.demo_code||"";
+    document.getElementById("verificationCode").value="";
+    const countdown=document.getElementById("holdCountdown");
+    const deadline=Date.now()+1000*tx.expires_in;
+    const tick=()=>{const n=Math.max(0,Math.ceil((deadline-Date.now())/1000));
+        countdown.textContent=n+" seconds remaining";
+        if(n===0){clearInterval(holdTimer);controls.hidden=true;
+            document.getElementById("resPaymentState").textContent="Expired — No money transferred";}};
+    tick();holdTimer=setInterval(tick,250);
+    async function decidePayment(decision){
+        const buttons=[document.getElementById("proceedPayment"),document.getElementById("cancelPayment")];
+        buttons.forEach(b=>b.disabled=true);
+        try{
+            const r=await fetch("/api/transactions/"+encodeURIComponent(tx.transaction_id)+"/decision",{
+                method:"POST",headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({decision,code:document.getElementById("verificationCode").value})});
+            const data=await r.json();
+            if(!data.success)throw new Error(data.error);
+            displayResult(data.transaction);
+        }catch(e){alert(e.message);}finally{buttons.forEach(b=>b.disabled=false);}
+    }
+    document.getElementById("proceedPayment").onclick=()=>decidePayment("proceed");
+    document.getElementById("cancelPayment").onclick=()=>decidePayment("cancel");
 }

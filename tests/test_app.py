@@ -49,7 +49,7 @@ class TransactionWorkflowTests(unittest.TestCase):
         tx=self.client.post("/api/predict",json=self.payload).get_json()["transaction"]
         self.assertIn("shap",tx["explanations"])
         self.assertTrue(tx["explanations"]["shap"]["contributions"])
-        for path in ("/","/simulator","/transactions","/models","/batch","/methodology","/api/chart-data"):
+        for path in ("/","/simulator","/transactions","/models","/batch","/api/chart-data"):
             self.assertEqual(self.client.get(path).status_code,200,path)
         batch=self.client.post("/api/run-batch-benchmark").get_json()
         self.assertEqual(sum(batch[k] for k in ("safe","suspicious","high","fraud")),500)

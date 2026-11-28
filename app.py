@@ -144,10 +144,6 @@ def models():
         validation_policy=engine.metadata.get("validation_policy",{}) if fresh else {},
         test_policy=engine.metadata.get("test_policy",{}) if fresh else {})
 
-@app.route("/methodology")
-def methodology():
-    return render_template("methodology.html",active_page="methodology")
-
 @app.route("/batch")
 def batch():
     return render_template("batch.html",active_page="batch")

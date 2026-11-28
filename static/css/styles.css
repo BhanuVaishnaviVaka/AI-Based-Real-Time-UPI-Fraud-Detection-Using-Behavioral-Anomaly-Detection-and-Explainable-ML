@@ -8,7 +8,7 @@
   --bg-app: #f4f6f9;
   --bg-surface: #ffffff;
   --bg-subtle: #f8fafc;
-  --bg-header: #0f172a;
+  --bg-header: #eef2f7;
   --bg-sidebar: #1e293b;
   
   --border-subtle: #e2e8f0;
@@ -94,13 +94,14 @@ body {
 
 /* Main Navigation Bar */
 .navbar-main {
-  background-color: #0f172a;
+  background-color: #eef2f7;
   padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-  border-bottom: 1px solid #1e293b;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+  border-top: 3px solid #1e40af;
+  border-bottom: 1px solid #d0dae6;
 }
 
 .nav-brand {
@@ -108,36 +109,39 @@ body {
   align-items: center;
   gap: 12px;
   text-decoration: none;
-  padding: 14px 0;
+  padding: 12px 0;
+  flex-shrink: 0;
 }
 
 .nav-logo-icon {
   width: 36px;
   height: 36px;
-  background: linear-gradient(135deg, #1d4ed8, #0284c7);
+  flex-shrink: 0;
+  background-color: #1e40af;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #ffffff;
   font-size: 1.2rem;
   font-weight: 800;
-  box-shadow: 0 2px 4px rgba(29, 78, 216, 0.3);
 }
 
 .nav-brand-text h1 {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text-main);
   letter-spacing: -0.2px;
+  white-space: nowrap;
 }
 
 .nav-brand-text p {
   font-size: 0.72rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.5px;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .nav-menu {
@@ -151,24 +155,25 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #94a3b8;
+  color: #475569;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
-  padding: 18px 16px;
+  padding: 18px 14px;
+  white-space: nowrap;
   transition: all 0.15s ease;
   border-bottom: 3px solid transparent;
 }
 
 .nav-link:hover {
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.04);
+  color: var(--text-main);
+  background-color: rgba(255, 255, 255, 0.65);
 }
 
 .nav-link.active {
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.06);
-  border-bottom-color: #38bdf8;
+  color: #1e40af;
+  background-color: #ffffff;
+  border-bottom-color: #1e40af;
   font-weight: 600;
 }
 
@@ -176,19 +181,21 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  background-color: #1e293b;
+  background-color: var(--safe-bg);
+  border: 1px solid var(--safe-border);
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 0.78rem;
-  color: #e2e8f0;
+  font-weight: 500;
+  color: var(--safe-text);
+  white-space: nowrap;
 }
 
 .pulse-dot {
   width: 8px;
   height: 8px;
-  background-color: #10b981;
+  background-color: var(--safe-green);
   border-radius: 50%;
-  box-shadow: 0 0 8px #10b981;
   animation: pulse 2s infinite;
 }
 

@@ -10,17 +10,6 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/prevention.css') }}">
 </head>
 <body>
-    <!-- Enterprise Security Status Banner -->
-    <div class="inst-header">
-        <div class="dept-info">
-            <span class="badge-academic">ACADEMIC DEMO</span>
-            <strong>UPI Transaction Risk & Anomaly Defense System</strong>
-        </div>
-        <div class="team-info">
-            Engine Version: <strong>v3 Academic Prototype</strong> &bull; Core: <strong>Hybrid ML + XGBoost TreeSHAP</strong>
-        </div>
-    </div>
-
     <!-- Enterprise FinTech Navbar -->
     <nav class="navbar-main">
         <a href="{{ url_for('dashboard') }}" class="nav-brand">
@@ -52,7 +41,6 @@
                     Model Evaluation
                 </a>
             </li>
-            <li><a href="{{ url_for('methodology') }}" class="nav-link">Methodology</a></li>
             <li>
                 <a href="{{ url_for('batch') }}" class="nav-link {% if active_page == 'batch' %}active{% endif %}">
                     Batch Audit
